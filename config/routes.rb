@@ -4,6 +4,7 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  devise_for :users
   #Defines API route mapping, default format and constraints
   namespace :api, defaults: { format: :json},
     constraints: { subdomain: 'api'}, path: '/' do
