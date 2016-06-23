@@ -4,7 +4,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   before(:each) { request.headers['Accept'] = "application/vnd.sokoapi.v1" }
 
   describe "GET #show" do
-    let(:user) { FactoryGirl.create(:user)}
+    let(:user) { FactoryGirl.create :user }
     before(:each){ get :show, id: user.id, format: :json }
 
     it "returns the info about a user on a hash" do
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   describe "PUT/PATCH #update" do
     context "when is successfully updated" do
-      let(:user){ FactoryGirl.create(:user) }
+      let(:user){ FactoryGirl.create :user }
       before(:each){ patch :update, {id: user.id, user:{ email: "new@email.com"}}, format: :json}
 
       it "renders the json representation for the updated user" do
@@ -78,6 +78,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe "DELETE #delete" do
+    let(:user){ FactoryGirl.create :user }
+    before(:each){ delete :destroy, { id: user.id}, format: :json }
 
+    it { should respond_with 204 }
   end
 end

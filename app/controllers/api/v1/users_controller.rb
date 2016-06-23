@@ -26,6 +26,13 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  #delete existing user
+  def destroy
+    user = User.find(params[:id])
+    user.destroy
+    head 204
+  end
+
   private
     #permitted parameters
     def user_params
