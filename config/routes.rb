@@ -1,9 +1,16 @@
+# See how all your routes lay out with "rake routes".
+# For more information about routes, see the Rails guide: http://guides.rubyonrails.org/routing.html.
+
+require 'api_constraints'
+
 Rails.application.routes.draw do
-  # See how all your routes lay out with "rake routes".
-  # For more information about routes, see the Rails guide: http://guides.rubyonrails.org/routing.html.
+  #Defines API route mapping, default format and constraints
+  namespace :api, defaults: { format: :json},
+    constraints: { subdomain: 'api'}, path: '/' do
+      #scopes versioning and handles version requests through headers
+      scope module: :v1,
+        constraints: ApiConstraints.new(version: 1, default: true) do
 
-  #Defines API
-  namespace :api, defaults: { format: :json} do
-
+      end
   end
 end
