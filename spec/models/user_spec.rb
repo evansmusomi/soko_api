@@ -8,15 +8,13 @@ RSpec.describe User, type: :model do
   end
 
   #Responds to methods
-  context "responds to its methods" do
-    it { expect(user).to respond_to(:email) }
-    it { expect(user).to respond_to (:password) }
-    it { expect(user).to respond_to (:password_confirmation) }
-  end
+  it { expect(user).to respond_to(:email) }
+  it { expect(user).to respond_to (:password) }
+  it { expect(user).to respond_to (:password_confirmation) }
 
   #Validations
   it { should validate_presence_of(:email) }
-  it { should validate_uniqueness_of(:email).case_insenstive }
+  it { should validate_uniqueness_of(:email).case_insensitive }
   it { should validate_confirmation_of(:password) }
   it { should allow_value('example@domain.com').for(:email) }
 
