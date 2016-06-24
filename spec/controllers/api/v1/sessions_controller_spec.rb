@@ -27,4 +27,14 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
       it { should respond_with 422 }
     end
   end
+
+  def "DELETE #destroy" do
+    let(:user){ FactoryGirl.create :user }
+    before(:each) do
+      sign_in user, store: false
+      delete :destroy, id: user.auth_token
+    end
+
+    it { should respond_with 204 }
+  end
 end
