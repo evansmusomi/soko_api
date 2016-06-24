@@ -5,9 +5,14 @@ module Authenticable
     @current_user ||= User.find_by(auth_token: request.headers['Authorization'])
   end
 
-  # Devise method ovveride - for handling access to actions
+  # Devise method overide - for handling access to actions
   def authenticate_with_token!
     renders json: {errors: "Not authenticated"},
-    status: :unauthorized unless current_user.present?
+    status: :unauthorized unless user_signed_in?
+  end
+
+  # Deise method overide - check user is signed in
+  def user_signed_in?
+    current_user.present?
   end
 end
