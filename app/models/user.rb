@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   # Hooks
   before_create :generate_authentication_token!
 
+  # Associations
+  has_many :products, dependent: :destroy
+
   # Validations
   validates :email, uniqueness: {case_sensitive: false}
   validates :auth_token, uniqueness: {case_sensitive: false}
