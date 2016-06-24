@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-  before(:each) { request.headers['Accept'] = "application/vnd.sokoapi.v1, #{Mime::JSON}" }
-  before(:each) { request.headers['Content-Type'] = Mime::JSON.to_s }
-
   describe "GET #show" do
     let(:user) { FactoryGirl.create :user }
     before(:each){ get :show, id: user.id }

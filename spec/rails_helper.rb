@@ -55,9 +55,14 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  #include to test requests
+  #include to test controller requests
   config.include Devise::TestHelpers, type: :controller
   config.include Request::JsonHelpers, type: :controller
+  config.include Request::HeadersHelpers, type: :controller
+
+  config.before(:each, type: :controller) do
+    include_default_accept_headers
+  end
 end
 
 Shoulda::Matchers.configure do |config|
