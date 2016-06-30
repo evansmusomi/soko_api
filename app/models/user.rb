@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   # Associations
   has_many :products, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   # Validations
   validates :email, uniqueness: {case_sensitive: false}

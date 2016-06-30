@@ -21,6 +21,7 @@ RSpec.describe User, type: :model do
   it { should allow_value('example@domain.com').for(:email) }
   it { should validate_uniqueness_of(:auth_token).case_insensitive }
   it { should have_many(:products) }
+  it { should have_many(:orders)}
 
   # Methods
   describe "#generate_authentication_token!" do
