@@ -1,16 +1,16 @@
 class Api::V1::UsersController < ApplicationController
   # Hooks
   before_action :authenticate_with_token!, only: [:update, :destroy]
-  
-  # Accepted format
+
+  # Accepts format
   respond_to :json
 
-  # Respond with user details
+  # Responds with user details
   def show
     respond_with User.find(params[:id])
   end
 
-  # Create new user based on permitted attributes
+  # Creates new user based on permitted attributes
   def create
     user = User.new(user_params)
     if user.save
@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # Update existing user
+  # Updates existing user
   def update
     user = current_user
 
@@ -31,14 +31,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # Delete existing user
+  # Deletes existing user
   def destroy
     current_user.destroy
     head 204
   end
 
   private
-    # Permitted parameters
+    # Permits specific parameters
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation)
     end

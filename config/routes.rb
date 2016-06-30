@@ -11,7 +11,9 @@ Rails.application.routes.draw do
       #scopes versioning and handles version requests through headers
       scope module: :v1,
         constraints: ApiConstraints.new(version: 1, default: true) do
-          resources :users, only: [:show, :create, :update, :destroy]
+          resources :users, only: [:show, :create, :update, :destroy] do
+            resources :products, only: [:create, :update]
+          end
           resources :sessions, only: [:create, :destroy]
           resources :products, only: [:show, :index]
       end

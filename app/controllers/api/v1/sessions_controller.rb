@@ -1,6 +1,6 @@
 class Api::V1::SessionsController < ApplicationController
 
-  # Handle log in request
+  # Handles log in request
   def create
     # Identify user using inputs
     user_email = params[:session][:email]
@@ -18,7 +18,7 @@ class Api::V1::SessionsController < ApplicationController
     end
   end
 
-  # Void previous user authentication token
+  # Voids previous user authentication token
   def destroy
     user = User.find_by(auth_token: params[:id])
     user.generate_authentication_token!

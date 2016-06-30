@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: {case_sensitive: false}
   validates :auth_token, uniqueness: {case_sensitive: false}
 
-  # Generate unique authentication token
+  # Generates unique authentication token
   def generate_authentication_token!
     begin
       self.auth_token = Devise.friendly_token
