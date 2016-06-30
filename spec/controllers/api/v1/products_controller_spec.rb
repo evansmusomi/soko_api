@@ -26,19 +26,36 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       get :index
     end
 
-    it "returns 4 records from the database" do
-      products_response = json_response
-      expect(products_response.length).to eq(4)
+    context "when is not receiving any product_ids parameter" do
+      it "returns 4 records from the database" do
+        products_response = json_response
+        expect(products_response.length).to eq(4)
+      end
+
+      it "returns the user object in each product" do
+        products_response = json_response
+        products_response.each do |product_response|
+          expect(product_response[:user]).to be_present
+        end
+      end
+
+      it { should respond_with 200 }
     end
 
-    it "returns the user object in each product" do
-      products_response = json_response
-      products_response.each do |product_response|
-        expect(product_response[:user]).to be_present
+    context "when product_ids parameter is sent" do
+      let(:user){ FactoryGirl.create :user }
+      before(:each) do
+        3.times { FactoryGirl.create :product, user: user }
+        get :index, product_ids: user.product_ids
+      end
+
+      it "returns just the products that belong to the user" do
+        products_response = json_response
+        products_response.each do |product_response|
+          expect(product_response[:user][:email]).to eql user.email
+        end
       end
     end
-
-    it { should respond_with 200 }
   end
 
   describe "POST #create" do
