@@ -62,4 +62,5 @@ group :test do
   # Test framework
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'email_spec'
 end
