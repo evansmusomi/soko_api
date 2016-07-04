@@ -19,7 +19,8 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
 
   describe "GET #show" do
     let(:current_user){ FactoryGirl.create :user }
-    let(:order){ FactoryGirl.create :order, user: current_user }
+    let(:product){ FactoryGirl.create :product }
+    let(:order){ FactoryGirl.create :order, user: current_user, product_ids: [product.id] }
     before(:each) do
       api_authorization_header current_user.auth_token
       get :show, user_id: current_user.id, id: order.id
@@ -39,7 +40,7 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
 
     it "includes the products on the order" do
       order_response = json_response
-      expect(order_response[:products]).to eq(1)
+      expect(order_response[:products].length).to eq(1)
     end
   end
 
