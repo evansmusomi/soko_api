@@ -48,7 +48,7 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     let(:current_user){ FactoryGirl.create :user }
     let(:product_1){ FactoryGirl.create :product }
     let(:product_2){ FactoryGirl.create :product }
-    let(:order_params){ {product_ids: [product_1.id, product_2.id]}}
+    let(:order_params){ {product_ids_and_quantities: [[product_1.id, 2], [product_2.id, 3]]} }
 
     before(:each) do
       api_authorization_header current_user.auth_token
@@ -58,6 +58,11 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     it "returns the recent user order record" do
       order_response = json_response
       expect(order_response[:id]).to be_present
+    end
+
+    it "embeds the two product objects related to the order" do
+      order_response = json_response
+      expect(order_response[:products].size).to eql 2
     end
 
     it { should respond_with 201 }

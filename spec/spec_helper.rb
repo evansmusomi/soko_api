@@ -16,6 +16,7 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require "action_mailer"
 require "email_spec"
 require "email_spec/rspec"
 
