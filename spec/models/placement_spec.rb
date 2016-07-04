@@ -7,6 +7,7 @@ RSpec.describe Placement, type: :model do
   # Attributes
   it { should respond_to :order_id }
   it { should respond_to :product_id }
+  it { should respond_to :quantity }
 
   # Validations
   it { should belong_to :order }
