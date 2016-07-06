@@ -8,12 +8,12 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     end
 
     it "returns the information about the product on a hash" do
-      product_response = json_response
+      product_response = json_response[:product]
       expect(product_response[:title]).to eql product.title
     end
 
     it "has the user as an embedded object" do
-      product_response = json_response
+      product_response = json_response[:product]
       expect(product_response[:user][:email]).to eql product.user.email
     end
 
@@ -28,12 +28,12 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
     context "when is not receiving any product_ids parameter" do
       it "returns 4 records from the database" do
-        products_response = json_response
+        products_response = json_response[:products]
         expect(products_response.length).to eq(4)
       end
 
       it "returns the user object in each product" do
-        products_response = json_response
+        products_response = json_response[:products]
         products_response.each do |product_response|
           expect(product_response[:user]).to be_present
         end
@@ -56,7 +56,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end
 
       it "returns just the products that belong to the user" do
-        products_response = json_response
+        products_response = json_response[:products]
         products_response.each do |product_response|
           expect(product_response[:user][:email]).to eql user.email
         end
@@ -74,7 +74,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end
 
       it "renders the json representation for the product record just created" do
-        product_response = json_response
+        product_response = json_response[:product]
         expect(product_response[:title]).to eql product_attributes[:title]
       end
 
@@ -116,7 +116,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end
 
       it "renders the json representation for the updated product" do
-        product_response = json_response
+        product_response = json_response[:product]
         expect(product_response[:title]).to eql "An expensive TV"
       end
 

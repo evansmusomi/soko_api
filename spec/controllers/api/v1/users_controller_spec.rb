@@ -6,12 +6,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     before(:each){ get :show, id: user.id }
 
     it "returns the info about a user on a hash" do
-      user_response = json_response
+      user_response = json_response[:user]
       expect(user_response[:email]).to eql user.email
     end
 
     it "has the product ids as an embedded object" do
-        user_response = json_response
+        user_response = json_response[:user]
         expect(user_response[:product_ids]).to eql []
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       before(:each){ post :create, { user: user_attributes}}
 
       it "renders the json representation for the user record just created" do
-        user_response = json_response
+        user_response = json_response[:user]
         expect(user_response[:email]).to eql user_attributes[:email]
       end
 
@@ -57,7 +57,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       before(:each){ patch :update, {id: user.id, user:{ email: "new@email.com"}}}
 
       it "renders the json representation for the updated user" do
-        user_response = json_response
+        user_response = json_response[:user]
         expect(user_response[:email]).to eql "new@email.com"
       end
 
