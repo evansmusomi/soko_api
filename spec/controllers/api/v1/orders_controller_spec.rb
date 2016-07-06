@@ -10,9 +10,16 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     end
 
     it "returns 4 order records from the user" do
-      orders_response = json_response
+      orders_response = json_response[:orders]
       expect(orders_response.size).to eq(4)
     end
+
+    # pagination info
+    it { expect(json_response).to have_key(:meta) }
+    it { expect(json_response[:meta]).to have_key(:pagination) }
+    it { expect(json_response[:meta][:pagination]).to have_key(:per_page) }
+    it { expect(json_response[:meta][:pagination]).to have_key(:total_pages) }
+    it { expect(json_response[:meta][:pagination]).to have_key(:total_objects) }
 
     it { should respond_with 200 }
   end
@@ -27,19 +34,19 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     end
 
     it "returns the user order record matching the id" do
-      order_response = json_response
+      order_response = json_response[:order]
       expect(order_response[:id]).to eql order.id
     end
 
     it { should respond_with 200 }
 
     it "includes the total for the order" do
-      order_response = json_response
+      order_response = json_response[:order]
       expect(order_response[:total]).to eql order.total.to_s
     end
 
     it "includes the products on the order" do
-      order_response = json_response
+      order_response = json_response[:order]
       expect(order_response[:products].length).to eq(1)
     end
   end
@@ -56,12 +63,12 @@ RSpec.describe Api::V1::OrdersController, type: :controller do
     end
 
     it "returns the recent user order record" do
-      order_response = json_response
+      order_response = json_response[:order]
       expect(order_response[:id]).to be_present
     end
 
     it "embeds the two product objects related to the order" do
-      order_response = json_response
+      order_response = json_response[:order]
       expect(order_response[:products].size).to eql 2
     end
 
