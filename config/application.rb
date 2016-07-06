@@ -43,6 +43,10 @@ module SokoApi
       g.helper = false
     end
 
+    # Adds to autoload paths
     config.autoload_paths += %W(\#{config.root}/lib)
+
+    # Sets queue adapter
+    config.active_job.queue_adapter = :delayed_job
   end
 end
