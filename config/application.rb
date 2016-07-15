@@ -31,5 +31,22 @@ module SokoApi
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Configure test suite - don't generate RSpec tests for views and helpers
+    config.generators do |g|
+      g.test_framework :rspec, fixture: true
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.view_specs false
+      g.helper_specs false
+      g.stylesheets = false
+      g.javascripts = false
+      g.helper = false
+    end
+
+    # Adds to autoload paths
+    config.autoload_paths += %W(\#{config.root}/lib)
+
+    # Sets queue adapter
+    config.active_job.queue_adapter = :delayed_job
   end
 end
